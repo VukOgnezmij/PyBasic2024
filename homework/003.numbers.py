@@ -34,8 +34,6 @@ def validateMask(inputMask):
     if len(inputMask) != 4:
         return False
     for partMask in inputMask:
-        if not str(partMask).isdigit():
-            return False
         if partMask < 0 or partMask > 255:
             return False
         if "01" in str(bin(partMask)[2:]):
@@ -53,7 +51,7 @@ for host in homework_task:
             mask = list(map(int, host[1].split(".")))
             if validateMask(mask) == True:
                 cidr = sum([bin(int(bits)).count("1") for bits in mask])
-                if cidr < 31 and validateIP(ip) == True and validateMask(mask) == True:
+                if cidr < 31 :
                     network = [i & m for i,m in zip(ip, mask)]
                     wildcard = [255^m for m in mask]
                     broadcast = [(i | ~m) & 0xff for i, m in zip(ip, mask)]
@@ -62,14 +60,14 @@ for host in homework_task:
                     host_min[3] = host_min[3] + 1
                     host_max[3] = host_max[3] - 1
                     print_output(host,network,wildcard,broadcast,host_min,host_max,cidr)
-                elif cidr == 31 and validateIP(ip) == True and validateMask(mask) == True:
+                elif cidr == 31 :
                     network = [i & m for i,m in zip(ip, mask)]
                     wildcard = [255^m for m in mask]
                     broadcast = [(i | ~m) & 0xff for i, m in zip(ip, mask)]
                     host_min = network[:]
                     host_max = broadcast[:]
                     print_output(host,network,wildcard,broadcast,host_min,host_max,cidr)
-                else: #cidr == 32 and validateIP(ip) == True and validateMask(mask) == True:
+                else:
                     print(host[0] + " is Localhost" + '\n')
             else:
                 wrongInput(host)
