@@ -24,10 +24,10 @@ def hostIsDigit(d_host):
             return False
     return True        
 
-def validateIP(input):
-    if len(input) != 4:
+def validateIP(inputIP):
+    if len(inputIP) != 4:
         return False
-    for part in input:
+    for part in inputIP:
         if part < 0 or part > 255:
             return False
     return True
@@ -53,7 +53,7 @@ for host in homework_task:
             mask = list(map(int, host[1].split(".")))
             if validateMask(mask) == True:
                 cidr = sum([bin(int(bits)).count("1") for bits in mask])
-                if cidr < 31 :
+                if cidr < 31:
                     network = [i & m for i,m in zip(ip, mask)]
                     wildcard = [255^m for m in mask]
                     broadcast = [(i | ~m) & 0xff for i, m in zip(ip, mask)]
@@ -62,7 +62,7 @@ for host in homework_task:
                     host_min[3] = host_min[3] + 1
                     host_max[3] = host_max[3] - 1
                     print_output(host,network,wildcard,broadcast,host_min,host_max,cidr)
-                elif cidr == 31 :
+                elif cidr == 31:
                     network = [i & m for i,m in zip(ip, mask)]
                     wildcard = [255^m for m in mask]
                     broadcast = [(i | ~m) & 0xff for i, m in zip(ip, mask)]
