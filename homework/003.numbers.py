@@ -41,42 +41,44 @@ def validateMask(inputMask):
         if "01" in str(bin(partMask)[2:]):
             return False 
     return True
-
-homework_task = ["192.168.63.54 / 255.255.254.0", "192.168.43.54 / 255.255.255.240"] 
-for host in homework_task:
-    host = host.replace(" ", "")
-    host = host.split("/")
-    if hostIsDigit(host) == True:
-        ip = list(map(int, host[0].split(".")))
-        if validateIP(ip) == True:
-            mask = list(map(int, host[1].split(".")))
-            if validateMask(mask) == True:
-                cidr = sum([bin(int(bits)).count("1") for bits in mask])
-                if cidr < 31:
-                    network = [i & m for i,m in zip(ip, mask)]
-                    wildcard = [255^m for m in mask]
-                    broadcast = [(i | ~m) & 0xff for i, m in zip(ip, mask)]
-                    host_min = network[:]
-                    host_max = broadcast[:]
-                    host_min[3] = host_min[3] + 1
-                    host_max[3] = host_max[3] - 1
-                    print_output(host,network,wildcard,broadcast,host_min,host_max,cidr)
-                elif cidr == 31:
-                    network = [i & m for i,m in zip(ip, mask)]
-                    wildcard = [255^m for m in mask]
-                    broadcast = [(i | ~m) & 0xff for i, m in zip(ip, mask)]
-                    host_min = network[:]
-                    host_max = broadcast[:]
-                    print_output(host,network,wildcard,broadcast,host_min,host_max,cidr)
+def main():
+    homework_task = ["192.168.63.54 / 255.255.254.0", "192.168.43.54 / 255.255.255.240"] 
+    for host in homework_task:
+        host = host.replace(" ", "")
+        host = host.split("/")
+        if hostIsDigit(host) == True:
+            ip = list(map(int, host[0].split(".")))
+            if validateIP(ip) == True:
+                mask = list(map(int, host[1].split(".")))
+                if validateMask(mask) == True:
+                    cidr = sum([bin(int(bits)).count("1") for bits in mask])
+                    if cidr < 31:
+                        network = [i & m for i,m in zip(ip, mask)]
+                        wildcard = [255^m for m in mask]
+                        broadcast = [(i | ~m) & 0xff for i, m in zip(ip, mask)]
+                        host_min = network[:]
+                        host_max = broadcast[:]
+                        host_min[3] = host_min[3] + 1
+                        host_max[3] = host_max[3] - 1
+                        print_output(host,network,wildcard,broadcast,host_min,host_max,cidr)
+                    elif cidr == 31:
+                        network = [i & m for i,m in zip(ip, mask)]
+                        wildcard = [255^m for m in mask]
+                        broadcast = [(i | ~m) & 0xff for i, m in zip(ip, mask)]
+                        host_min = network[:]
+                        host_max = broadcast[:]
+                        print_output(host,network,wildcard,broadcast,host_min,host_max,cidr)
+                    else:
+                        print(host[0] + " is Localhost" + '\n')
                 else:
-                    print(host[0] + " is Localhost" + '\n')
+                    wrongData(mask)
             else:
-                wrongData(mask)
+                wrongData(ip)
         else:
-            wrongData(ip)
-    else:
-        wrongHost(host)
-    
+            wrongHost(host)
+            
+if __name__ == "__main__":
+    main()
         
     
     
