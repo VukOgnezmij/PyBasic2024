@@ -75,7 +75,6 @@ for host in homework_task:
                 wrongData(mask)
         else:
             wrongData(ip)
-            
     else:
         wrongHost(host)
     
