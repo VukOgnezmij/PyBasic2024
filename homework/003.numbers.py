@@ -41,6 +41,7 @@ def validateMask(inputMask):
         if "01" in str(bin(partMask)[2:]):
             return False 
     return True
+
 def main():
     homework_task = ["192.168.63.54 / 255.255.254.0", "192.168.43.54 / 255.255.255.240"] 
     for host in homework_task:
