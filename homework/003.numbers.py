@@ -7,8 +7,11 @@ def print_output(p_host,p_network,p_wildcard,p_broadcast,p_host_min,p_host_max,p
     print("Host Max: " + '.'.join([str(oct) for oct in p_host_max]))
     print("CIDR: " + str(p_cidr))
     print("\n")
+
+def wrongData(wrong_data):
+    print("Wrong input: " + '.'.join([str(d) for d in wrong_data]) + '\n')
     
-def wrongInput(bad_host):
+def wrongHost(bad_host):
     print("Wrong input: " + '/'.join([str(d) for d in bad_host]) + '\n')
 
 def OnesOnTheLeft(part):
@@ -19,8 +22,7 @@ def hostIsDigit(d_host):
         d_host_part = d_host_part.replace(".", "")
         if not str(d_host_part).isdigit():
             return False
-    return True
-        
+    return True        
 
 def validateIP(input):
     if len(input) != 4:
@@ -70,12 +72,12 @@ for host in homework_task:
                 else:
                     print(host[0] + " is Localhost" + '\n')
             else:
-                wrongInput(host)
+                wrongData(mask)
         else:
-            wrongInput(host)
+            wrongData(ip)
             
     else:
-        wrongInput(host)
+        wrongHost(host)
     
         
     
