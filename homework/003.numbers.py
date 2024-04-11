@@ -43,7 +43,6 @@ def validateMask(inputMask):
     return True
 
 homework_task = ["192.168.63.54 / 255.255.254.0", "192.168.43.54 / 255.255.255.240"] 
-#homework_task = ["192.168.63.54 /     255.255.254.0"]
 for host in homework_task:
     host = host.replace(" ", "")
     host = host.split("/")
