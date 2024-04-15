@@ -8,37 +8,34 @@ def print_output(p_host,p_network,p_wildcard,p_broadcast,p_host_min,p_host_max,p
     print("CIDR: " + str(p_cidr))
     print("\n")
 
-def wrongData(wrong_data):
+def wrong_data(wrong_data):
     print("Wrong input: " + ".".join([str(d) for d in wrong_data]) + "\n")
     
-def wrongHost(bad_host):
+def wrong_host(bad_host):
     print("Wrong input: " + "/".join([str(d) for d in bad_host]) + "\n")
 
-def OnesOnTheLeft(part):
-    return ((part+1) & part == 0) and (part!=0)
-
-def hostIsDigit(d_host):
+def host_is_digit(d_host):
     for d_host_part in d_host:
         d_host_part = d_host_part.replace(".", "")
         if not str(d_host_part).isdigit():
             return False
     return True        
 
-def validateIP(inputIP):
-    if len(inputIP) != 4:
+def validate_ip(input_ip):
+    if len(input_ip) != 4:
         return False
-    for part in inputIP:
+    for part in input_ip:
         if part < 0 or part > 255:
             return False
     return True
 
-def validateMask(inputMask):
-    if len(inputMask) != 4:
+def validate_mask(input_mask):
+    if len(input_mask) != 4:
         return False
-    for partMask in inputMask:
-        if partMask < 0 or partMask > 255:
+    for part_mask in input_mask:
+        if part_mask < 0 or part_mask > 255:
             return False
-        if "01" in str(bin(partMask)[2:]):
+        if "01" in str(bin(part_mask)[2:]):
             return False 
     return True
 
@@ -47,11 +44,11 @@ def main():
     for host in homework_task:
         host = host.replace(" ", "")
         host = host.split("/")
-        if hostIsDigit(host) == True:
+        if host_is_digit(host) == True:
             ip = list(map(int, host[0].split(".")))
-            if validateIP(ip) == True:
+            if validate_ip(ip) == True:
                 mask = list(map(int, host[1].split(".")))
-                if validateMask(mask) == True:
+                if validate_mask(mask) == True:
                     cidr = sum([bin(int(bits)).count("1") for bits in mask])
                     if cidr < 31:
                         network = [i & m for i,m in zip(ip, mask)]
@@ -72,11 +69,11 @@ def main():
                     else:
                         print(host[0] + " is Localhost" + "\n")
                 else:
-                    wrongData(mask)
+                    wrong_data(mask)
             else:
-                wrongData(ip)
+                wrong_data(ip)
         else:
-            wrongHost(host)
+            wrong_host(host)
             
 if __name__ == "__main__":
     main()
