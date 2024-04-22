@@ -1,3 +1,5 @@
+from rich import inspect
+
 output = """
 Local Interface         Exptime(s) Neighbor Interface            Neighbor Device
 -------------------------------------------------------------------------------------
@@ -5,7 +7,7 @@ Local Interface         Exptime(s) Neighbor Interface            Neighbor Device
 10GE1/0/1                     105  10GE1/0/1                     test-server.stg
     """.strip()
 
-output = output.replace("-", "")
-output = output.replace("\n\n", "\n")
-
+output = output.splitlines()
+del output[1]
+output = "\n".join(output)
 print(output)
